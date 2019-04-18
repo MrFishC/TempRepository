@@ -26,12 +26,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public int initVariableId() {
+        //按照自己的理解就是让binding去对于的layout中查找控件
         return BR.viewModel;
     }
 
     @Override
     public LoginViewModel initViewModel() {
+        //选择性重写initViewModel()方法，返回ViewModel对象
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
+        //怎么做到 默认调用的呢?BaseActivity的initViewDataBinding方法中做了逻辑判断,ViewModel对象为空会调用createViewModel方法
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
         return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
