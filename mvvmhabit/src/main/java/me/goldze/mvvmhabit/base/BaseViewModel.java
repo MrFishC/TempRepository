@@ -7,22 +7,30 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import com.trello.rxlifecycle2.LifecycleProvider;
-
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 /**
  * Created by goldze on 2017/6/15.
+ *
+ * 基本使用:
+ *  1.定义一个ViewModel只需要继承ViewModel抽象类即可,点击查看AndroidViewModel(构造方法必须传递@link Application)是ViewModel的子类：
+ *      todo 为什么不直接选择继承ViewModel?
+ *  2.然后我们就可以在activity/fragment中实例化它：
+ *      2.1.MainViewModel viewModel = ViewModelProviders.of(this).get(XxxViewModel.class);
+ *      2.2.通过ViewModelProvider创建ViewModel的方式,ViewModel才具备了一些比较方便实用的功能.
+ *  3.因为创建ViewModel时传入了activity/fragment对象实例（ViewModelProviders.of(this)）,所以ViewModel可以感知宿主的生命周期(还未在代码中感知到);
+ *
  */
 public class BaseViewModel<M extends BaseModel> extends AndroidViewModel implements IBaseViewModel {
+
     protected M model;
     private UIChangeLiveData uc;
+
     //弱引用持有
     private WeakReference<LifecycleProvider> lifecycle;
 
